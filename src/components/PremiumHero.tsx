@@ -42,7 +42,7 @@ export default function PremiumHero() {
           <div className="absolute inset-0 opacity-[0.025] mix-blend-multiply" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")" }} />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-5 md:px-8 pt-14 lg:pt-20 pb-10">
+        <div className="relative max-w-7xl mx-auto px-5 md:px-8 pt-8 lg:pt-20 pb-6 lg:pb-10">
           {/* ── Top meta strip ── */}
           <motion.div {...fadeUp} className="flex flex-wrap items-center justify-between gap-4 mb-10 pb-5 border-b border-[#003933]/15">
             <div className="inline-flex items-center gap-3">
@@ -59,25 +59,25 @@ export default function PremiumHero() {
           {/* ── Main editorial split ── */}
           <div className="grid lg:grid-cols-12 gap-10 lg:gap-14">
             {/* Left column */}
-            <div className="lg:col-span-7">
-              <motion.div {...fadeUp} className="inline-flex items-center gap-2 mb-6 text-[10px] font-bold uppercase tracking-[0.2em] text-[#003933]">
-                <Sparkles className="w-3 h-3" /><span>B2B Electronics · Wholesale Supply · Vietnam</span>
+            <div className="lg:col-span-7 min-w-0">
+              <motion.div {...fadeUp} className="inline-flex items-center gap-2 mb-4 sm:mb-6 text-[10px] font-bold uppercase tracking-[0.2em] text-[#003933]">
+                <Sparkles className="w-3 h-3" /><span>B2B Electronics · Wholesale · Vietnam</span>
               </motion.div>
 
-              <motion.h1 {...fadeUp} transition={{ duration: 0.8, delay: 0.05, ease: [0.16, 1, 0.3, 1] }} className="text-[32px] sm:text-5xl lg:text-[62px] font-semibold leading-[1] tracking-[-0.025em] mb-6">
+              <motion.h1 {...fadeUp} transition={{ duration: 0.8, delay: 0.05, ease: [0.16, 1, 0.3, 1] }} className="text-[26px] sm:text-5xl lg:text-[62px] font-semibold leading-[1.02] sm:leading-[1] tracking-[-0.025em] mb-4 sm:mb-6">
                 <span className="block">Wholesale electronics,</span>
                 <span className="block">sourced from <span className="relative inline-block align-baseline">
                   <span className="relative z-10 italic font-serif text-[#003933] font-medium">Vietnam</span>
-                  <span className="absolute bottom-1 left-0 right-0 h-3 bg-[#003933]/10 -z-0 rounded-sm" />
+                  <span className="absolute bottom-0.5 sm:bottom-1 left-0 right-0 h-2.5 sm:h-3 bg-[#003933]/10 -z-0 rounded-sm" />
                 </span>.</span>
                 <span className="block text-[#003933]/30">Delivered worldwide.</span>
               </motion.h1>
 
-              <motion.p {...fadeUp} transition={{ duration: 0.7, delay: 0.12 }} className="max-w-lg text-[15px] text-[#0a0a0a]/65 leading-relaxed mb-7">
-                Exen Co Limited is a B2B supplier of laptops, servers, networking & enterprise electronics — serving business buyers across <span className="text-[#003933] font-semibold">Vietnam, the EU & international markets</span>. Tri-currency settlement, manufacturer-backed, bulk-ready.
+              <motion.p {...fadeUp} transition={{ duration: 0.7, delay: 0.12 }} className="max-w-lg text-[13.5px] sm:text-[15px] text-[#0a0a0a]/65 leading-relaxed mb-5 sm:mb-7">
+                B2B supplier of laptops, servers, networking & enterprise electronics — serving <span className="text-[#003933] font-semibold">Vietnam, the EU & international markets</span>. Tri-currency, manufacturer-backed, bulk-ready.
               </motion.p>
 
-              <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.2 }} className="flex flex-wrap items-center gap-3 mb-10">
+              <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.2 }} className="flex flex-wrap items-center gap-2.5 sm:gap-3 mb-6 sm:mb-10">
                 <Button asChild className="group bg-gradient-to-br from-[#003933] to-black text-[#fffef1] h-11 px-6 rounded-full text-[13px] font-semibold shadow-lg shadow-[#003933]/20 hover:shadow-[#003933]/35 hover:-translate-y-0.5 transition-all">
                   <Link href="/contact" className="flex items-center gap-2">Request a Quote <ArrowUpRight className="w-4 h-4 group-hover:rotate-45 transition-transform duration-300" /></Link>
                 </Button>
@@ -88,8 +88,8 @@ export default function PremiumHero() {
               </motion.div>
 
               {/* Heritage rule + marquee */}
-              <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.28 }} className="border-t border-[#003933]/15 pt-5">
-                <div className="flex items-center justify-between mb-4">
+              <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.28 }} className="border-t border-[#003933]/15 pt-4 sm:pt-5">
+                <div className="flex items-center justify-between mb-3 sm:mb-4">
                   <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#003933]/55">Live Stock · Shop by Category</span>
                   <Link href="/shop" className="group text-[10px] font-bold uppercase tracking-wider text-[#003933] inline-flex items-center gap-1 hover:gap-2 transition-all">View all <ChevronRight className="w-3 h-3" /></Link>
                 </div>
@@ -107,43 +107,43 @@ export default function PremiumHero() {
             </div>
 
             {/* Right column — catalog orb */}
-            <motion.div initial={{ opacity: 0, scale: 0.96 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }} className="lg:col-span-5">
+            <motion.div initial={{ opacity: 0, scale: 0.96 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }} className="lg:col-span-5 w-full min-w-0">
               <div className="relative">
-                <div className="relative aspect-[5/6] rounded-[36px] overflow-hidden bg-gradient-to-br from-[#003933] via-[#005C4F] to-black shadow-2xl shadow-[#003933]/35">
+                <div className="relative aspect-square sm:aspect-[5/6] rounded-[28px] sm:rounded-[36px] overflow-hidden bg-gradient-to-br from-[#003933] via-[#005C4F] to-black shadow-2xl shadow-[#003933]/35">
                   <div className="exen-mesh absolute inset-0 opacity-60" />
-                  <div className="exen-halo-a absolute -top-1/3 -right-1/4 w-[520px] h-[520px] rounded-full opacity-70 blur-2xl" />
-                  <div className="absolute -bottom-1/4 -left-1/4 w-[420px] h-[420px] rounded-full opacity-[0.07] blur-3xl bg-[radial-gradient(circle,#fffef1_0%,transparent_70%)]" />
+                  <div className="exen-halo-a absolute -top-1/3 -right-1/4 w-[380px] sm:w-[520px] h-[380px] sm:h-[520px] rounded-full opacity-70 blur-2xl" />
+                  <div className="absolute -bottom-1/4 -left-1/4 w-[320px] sm:w-[420px] h-[320px] sm:h-[420px] rounded-full opacity-[0.07] blur-3xl bg-[radial-gradient(circle,#fffef1_0%,transparent_70%)]" />
                   <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: 'radial-gradient(circle,#fffef1 1px,transparent 1px)', backgroundSize: '24px 24px' }} />
                   <div className="absolute inset-0 opacity-[0.09] mix-blend-overlay" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n2)'/%3E%3C/svg%3E\")" }} />
 
-                  <div className="relative h-full flex flex-col justify-between p-7">
+                  <div className="relative h-full flex flex-col justify-between p-5 sm:p-7">
                     <div className="flex items-start justify-between">
                       <div>
-                        <div className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#fffef1]/50 mb-1.5">Live Inventory</div>
-                        <div className="text-[#fffef1] text-xs font-semibold">Updated · Q2 2026</div>
+                        <div className="text-[9px] font-bold uppercase tracking-[0.28em] text-[#fffef1]/50 mb-1">Live Inventory</div>
+                        <div className="text-[#fffef1] text-[11px] sm:text-xs font-semibold">Updated · Q2 2026</div>
                       </div>
-                      <div className="relative w-12 h-12 rounded-full border border-[#fffef1]/25 flex items-center justify-center">
+                      <div className="relative w-9 h-9 sm:w-12 sm:h-12 rounded-full border border-[#fffef1]/25 flex items-center justify-center">
                         <div className="absolute inset-1 rounded-full border border-[#fffef1]/15" />
                         <div className="w-1.5 h-1.5 rounded-full bg-[#fffef1] animate-pulse" />
                       </div>
                     </div>
 
-                    <div className="relative flex items-center justify-center py-4">
-                      <div className="absolute w-72 h-72 rounded-full border border-[#fffef1]/10 animate-[exen-spin_38s_linear_infinite]" />
-                      <div className="absolute w-56 h-56 rounded-full border border-[#fffef1]/15 animate-[exen-spin_28s_linear_infinite_reverse]" />
-                      <div className="absolute w-40 h-40 rounded-full border border-dashed border-[#fffef1]/15" />
-                      <div className="relative w-28 h-28 rounded-full bg-[#fffef1]/8 backdrop-blur-xl border border-[#fffef1]/25 flex items-center justify-center shadow-2xl">
+                    <div className="relative flex items-center justify-center py-3 sm:py-4">
+                      <div className="absolute w-60 h-60 sm:w-72 sm:h-72 rounded-full border border-[#fffef1]/10 animate-[exen-spin_38s_linear_infinite]" />
+                      <div className="absolute w-48 h-48 sm:w-56 sm:h-56 rounded-full border border-[#fffef1]/15 animate-[exen-spin_28s_linear_infinite_reverse]" />
+                      <div className="absolute w-36 h-36 sm:w-40 sm:h-40 rounded-full border border-dashed border-[#fffef1]/15" />
+                      <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#fffef1]/8 backdrop-blur-xl border border-[#fffef1]/25 flex items-center justify-center shadow-2xl">
                         {ORB_ICONS.map((I, i) => (
-                          <I key={i} className={`absolute w-11 h-11 text-[#fffef1] transition-all duration-700 ${fx === i ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`} />
+                          <I key={i} className={`absolute w-10 h-10 sm:w-11 sm:h-11 text-[#fffef1] transition-all duration-700 ${fx === i ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`} />
                         ))}
                       </div>
                     </div>
 
-                    <div className="space-y-2.5">
-                      {[{ v: '12+', l: 'Product Categories' }, { v: '3', l: 'Currencies · VND EUR USD' }, { v: '24h', l: 'Quote Response' }].map((s, i) => (
-                        <div key={i} className={`flex items-baseline justify-between ${i < 2 ? 'border-b border-[#fffef1]/15 pb-2' : ''}`}>
-                          <span className="text-[#fffef1] font-serif italic text-2xl leading-none">{s.v}</span>
-                          <span className="text-[10px] uppercase tracking-[0.2em] text-[#fffef1]/55 font-semibold">{s.l}</span>
+                    <div className="space-y-2 sm:space-y-2.5">
+                      {[{ v: '12+', l: 'Categories' }, { v: '3', l: 'VND · EUR · USD' }, { v: '24h', l: 'Quote Response' }].map((s, i) => (
+                        <div key={i} className={`flex items-baseline justify-between ${i < 2 ? 'border-b border-[#fffef1]/15 pb-1.5 sm:pb-2' : ''}`}>
+                          <span className="text-[#fffef1] font-serif italic text-xl sm:text-2xl leading-none">{s.v}</span>
+                          <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.18em] sm:tracking-[0.2em] text-[#fffef1]/55 font-semibold">{s.l}</span>
                         </div>
                       ))}
                     </div>
@@ -151,18 +151,18 @@ export default function PremiumHero() {
                 </div>
 
                 {/* Floating badges */}
-                <a href="mailto:Exencolimited@gmail.com" className="absolute -bottom-6 -left-4 sm:-left-6 bg-[#fffef1] border border-[#003933]/20 rounded-2xl p-3.5 shadow-xl shadow-[#003933]/15 hover:shadow-2xl hover:-translate-y-1 transition-all flex items-center gap-3 max-w-[calc(100%-2rem)]">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#003933] to-black flex items-center justify-center shrink-0"><Mail className="w-4 h-4 text-[#fffef1]" /></div>
+                <a href="mailto:Exencolimited@gmail.com" className="absolute -bottom-4 sm:-bottom-6 -left-2 sm:-left-6 bg-[#fffef1] border border-[#003933]/20 rounded-2xl p-2.5 sm:p-3.5 shadow-xl shadow-[#003933]/15 hover:shadow-2xl hover:-translate-y-1 transition-all flex items-center gap-2 sm:gap-3 max-w-[calc(100%-1rem)] sm:max-w-[calc(100%-2rem)]">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br from-[#003933] to-black flex items-center justify-center shrink-0"><Mail className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#fffef1]" /></div>
                   <div className="min-w-0">
-                    <div className="text-[9px] font-bold uppercase tracking-wider text-[#003933]/55">Inquiries</div>
-                    <div className="text-xs font-bold text-[#003933] truncate">Exencolimited@gmail.com</div>
+                    <div className="text-[8px] sm:text-[9px] font-bold uppercase tracking-wider text-[#003933]/55">Inquiries</div>
+                    <div className="text-[11px] sm:text-xs font-bold text-[#003933] truncate">Exencolimited@gmail.com</div>
                   </div>
                 </a>
-                <div className="absolute -top-4 -right-3 sm:-right-5 bg-black text-[#fffef1] rounded-2xl px-4 py-3 shadow-xl flex items-center gap-2.5">
-                  <MapPin className="w-4 h-4 text-[#0A7060]" />
+                <div className="absolute -top-3 sm:-top-4 -right-2 sm:-right-5 bg-black text-[#fffef1] rounded-2xl px-3 sm:px-4 py-2 sm:py-3 shadow-xl flex items-center gap-2 sm:gap-2.5">
+                  <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#0A7060]" />
                   <div>
-                    <div className="text-[9px] font-bold uppercase tracking-wider text-[#fffef1]/50">Hanoi · HQ</div>
-                    <div className="text-xs font-bold">Serving Worldwide</div>
+                    <div className="text-[8px] sm:text-[9px] font-bold uppercase tracking-wider text-[#fffef1]/50">Hanoi · HQ</div>
+                    <div className="text-[11px] sm:text-xs font-bold">Serving Worldwide</div>
                   </div>
                 </div>
               </div>
