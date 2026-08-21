@@ -31,6 +31,14 @@ const CATEGORY_DESCRIPTIONS: Record<string, { title: string; accent: string; des
   'Access Point': { title: "Access Points", accent: "indoor & outdoor", desc: "Wireless access points for enterprise WiFi coverage — deployment ready." },
 };
 
+// Accept plural/lowercase variants from links (e.g. "Laptops", "switches") and fall back to Laptop
+const CAT_ALIASES: Record<string, string> = { laptops: 'Laptop', monitors: 'Monitor', displays: 'Monitor', desktops: 'Desktop', computers: 'Desktop', 'video cards': 'Video Card', gpus: 'Video Card', servers: 'Server', routers: 'Router', switches: 'Network Switch', 'network switches': 'Network Switch', 'access points': 'Access Point', webcams: 'Webcam', cables: 'Cable', cabling: 'Cable' };
+function normalizeCat(raw: string | null): string {
+  if (!raw) return 'Laptop';
+  const exact = TOP_CATEGORIES.find(c => c.toLowerCase() === raw.trim().toLowerCase());
+  return exact || CAT_ALIASES[raw.trim().toLowerCase()] || 'Laptop';
+}
+
 const SORTS = [{ value: 'newest', label: 'Newest' }, { value: 'price_asc', label: 'Price · Low → High' }, { value: 'price_desc', label: 'Price · High → Low' }, { value: 'title_asc', label: 'Name · A–Z' }];
 
 interface Product { _id: string; title: string; price: number; description: string; images: string[]; wilkyart_category: string; features?: string[]; }
@@ -44,7 +52,7 @@ function ShopContent() {
   const [cats, setCats] = useState<{ _id: string; count: number }[]>([]);
   const [pg, setPg] = useState({ page: 1, total: 0, totalPages: 1, hasMore: false });
   const [q, setQ] = useState(sp.get('search') || '');
-  const [cat, setCat] = useState(sp.get('category') || 'Laptop');
+  const [cat, setCat] = useState(() => normalizeCat(sp.get('category')));
   const [sort, setSort] = useState(sp.get('sort') || 'newest');
   const [view, setView] = useState<'grid' | 'list'>('grid');
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -61,6 +69,9 @@ function ShopContent() {
   }, [cat, q, sort]);
 
   useEffect(() => { fetch_(1); }, [fetch_]);
+  // Keep category in sync when the URL changes while already on /shop (e.g. header/footer links)
+  const urlCat = sp.get('category');
+  useEffect(() => { setCat(normalizeCat(urlCat)); }, [urlCat]);
 
   const handleSearch = (e: React.FormEvent) => { e.preventDefault(); fetch_(1); };
   const selCat = (c: string) => setCat(c === cat ? '' : c);

@@ -3,20 +3,20 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, ArrowUpRight, Mail, MapPin, Laptop, Monitor, Server, Router, Network, Cpu, HardDrive, Webcam, Wifi, Cable, Tv, Keyboard, Shield, Truck, Globe, Package, Sparkles, ChevronRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Mail, MapPin, Laptop, Monitor, Server, Router, Network, Cpu, HardDrive, Webcam, Wifi, Cable, Zap, Shield, Truck, Globe, Package, Sparkles, ChevronRight } from 'lucide-react';
 
 const CATS = [
-  { icon: Laptop, name: 'Laptops' }, { icon: Monitor, name: 'Monitors' }, { icon: Cpu, name: 'Video Cards' },
-  { icon: HardDrive, name: 'Desktops' }, { icon: Router, name: 'Routers' }, { icon: Network, name: 'Switches' },
-  { icon: Server, name: 'Servers' }, { icon: Keyboard, name: 'Keyboards' }, { icon: Webcam, name: 'Webcams' },
-  { icon: Wifi, name: 'Access Points' }, { icon: Cable, name: 'Cables' }, { icon: Tv, name: 'Displays' },
+  { icon: Laptop, name: 'Laptops', cat: 'Laptop' }, { icon: Monitor, name: 'Monitors', cat: 'Monitor' }, { icon: Cpu, name: 'Video Cards', cat: 'Video Card' },
+  { icon: HardDrive, name: 'Desktops', cat: 'Desktop' }, { icon: Router, name: 'Routers', cat: 'Router' }, { icon: Network, name: 'Switches', cat: 'Network Switch' },
+  { icon: Server, name: 'Servers', cat: 'Server' }, { icon: Zap, name: 'UPS', cat: 'UPS' }, { icon: Webcam, name: 'Webcams', cat: 'Webcam' },
+  { icon: Wifi, name: 'Access Points', cat: 'Access Point' }, { icon: Cable, name: 'Cables', cat: 'Cable' },
 ];
 
 const INDEX = [
-  { n: '01', title: 'Computing', sub: 'Laptops · Desktops · Workstations · GPUs · Keyboards', icon: Laptop },
-  { n: '02', title: 'Networking', sub: 'Routers · Managed Switches · Access Points · Cabling', icon: Network },
-  { n: '03', title: 'Servers & Power', sub: 'Rack · Tower · Blade · UPS · Infrastructure', icon: Server },
-  { n: '04', title: 'Display & Peripherals', sub: 'Monitors · TVs · Projectors · Webcams · VoIP', icon: Monitor },
+  { n: '01', title: 'Computing', sub: 'Laptops · Desktops · Workstations · GPUs', icon: Laptop, cat: 'Laptop' },
+  { n: '02', title: 'Networking', sub: 'Routers · Managed Switches · Access Points · Cabling', icon: Network, cat: 'Router' },
+  { n: '03', title: 'Servers & Power', sub: 'Rack · Tower · Blade · UPS · Infrastructure', icon: Server, cat: 'Server' },
+  { n: '04', title: 'Display & Peripherals', sub: 'Monitors · Webcams · Video Cards', icon: Monitor, cat: 'Monitor' },
 ];
 
 const CURRENCIES = [{ c: 'VND', s: '₫' }, { c: 'EUR', s: '€' }, { c: 'USD', s: '$' }];
@@ -96,7 +96,7 @@ export default function PremiumHero() {
                 <div className="exen-marquee relative overflow-hidden">
                   <div className="flex gap-2 exen-marquee-track">
                     {[...CATS, ...CATS].map((c, i) => (
-                      <Link key={i} href={`/shop?category=${encodeURIComponent(c.name)}`} className="group shrink-0 inline-flex items-center gap-2 bg-white/70 backdrop-blur border border-[#003933]/15 hover:border-[#003933] hover:bg-[#003933] rounded-full pl-2 pr-4 py-1.5 transition-all">
+                      <Link key={i} href={`/shop?category=${encodeURIComponent(c.cat)}`} className="group shrink-0 inline-flex items-center gap-2 bg-white/70 backdrop-blur border border-[#003933]/15 hover:border-[#003933] hover:bg-[#003933] rounded-full pl-2 pr-4 py-1.5 transition-all">
                         <div className="w-7 h-7 rounded-full bg-[#fffef1] group-hover:bg-[#fffef1]/15 flex items-center justify-center transition-colors"><c.icon className="w-3.5 h-3.5 text-[#003933] group-hover:text-[#fffef1] transition-colors" /></div>
                         <span className="text-[11px] font-bold text-[#003933] group-hover:text-[#fffef1] whitespace-nowrap transition-colors">{c.name}</span>
                       </Link>
@@ -200,7 +200,7 @@ export default function PremiumHero() {
           <div className="grid md:grid-cols-2 border-t border-[#fffef1]/10">
             {INDEX.map((f, i) => (
               <motion.div key={i} {...fadeUp} transition={{ duration: 0.7, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }} className={`border-b border-[#fffef1]/10 ${i % 2 === 0 ? 'md:border-r md:border-[#fffef1]/10' : ''}`}>
-                <Link href="/shop" className="group relative flex items-start gap-5 p-7 lg:p-8 hover:bg-[#003933]/25 transition-colors">
+                <Link href={`/shop?category=${encodeURIComponent(f.cat)}`} className="group relative flex items-start gap-5 p-7 lg:p-8 hover:bg-[#003933]/25 transition-colors">
                   <span className="font-serif italic text-[#0A7060] text-xl w-9 shrink-0 mt-1">{f.n}</span>
                   <div className="flex-1">
                     <h3 className="text-lg lg:text-xl font-semibold mb-1.5 tracking-tight">{f.title}</h3>
