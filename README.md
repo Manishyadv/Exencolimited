@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Exen Co Limited — Wholesale Electronics (B2B)
 
-## Getting Started
+Next.js 15 App Router storefront for a Vietnam-based B2B electronics wholesaler (VND · EUR · USD). Product data lives in MongoDB Atlas (`wilkyart.products`).
 
-First, run the development server:
+## Run locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.local.example .env.local   # or create .env.local with MONGODB_URI=...
+npm run dev                        # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`MONGODB_URI` is required — the shop and `/api/products` return nothing without it.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Layout
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Path | Purpose |
+|---|---|
+| `src/app/page.tsx` | Home — `PremiumHero` + `PremiumPrintersSection` (featured) |
+| `src/app/shop/page.tsx` | Catalog: category groups, tab strip, search, sort, pagination |
+| `src/app/api/products/route.ts` | Paginated product API (`?category=&search=&sort=&page=`), capped at 80/category |
+| `src/lib/mongodb.ts` | Connection + `VALID_CATEGORIES` (source of truth for category names) |
+| `src/contexts/` | Cart, Currency (VND/EUR/USD), Cookie consent |
+| `.claude/tasks/claude.md` | Full brand/design spec, constants, and **session handoff log** |
 
-## Learn More
+## Category links — the one rule
 
-To learn more about Next.js, take a look at the following resources:
+Always link with the exact singular category value: `/shop?category=Network%20Switch`, never `Switches`. See "Category Routing Contract" in `.claude/tasks/claude.md`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Vercel, auto-deploys from `main`. Set `MONGODB_URI` in Vercel project env.

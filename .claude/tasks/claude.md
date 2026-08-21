@@ -106,10 +106,10 @@ Always before coding:
 ## Product Database — MongoDB Atlas
 
 ### Connection Details
-- **URI:** `mongodb+srv://manishyadv_db_user:q2zS5QJZ3hQtpzWr@dataset.prlzwnd.mongodb.net/?appName=dataset`
+- **URI:** `MONGODB_URI` in `.env.local` (never commit the URI — this file is git-tracked)
 - **Database:** `wilkyart`
 - **Collection:** `products`
-- **Max per category:** 50 products (take all if fewer)
+- **Max per category:** 80 products shown on site (`MAX_PER_CATEGORY` in `src/app/api/products/route.ts`)
 - **Indexes:** `wilkyart_category`, `price`
 
 ### Product Schema
@@ -119,19 +119,19 @@ Always before coding:
 
 ### VALID_CATEGORIES — Electronics & Computers Taxonomy
 ```typescript
-const VALID_CATEGORIES = ['Desktop','Laptop','Monitor','Video Card','Keyboard','Webcam','Router','Network Switch','Access Point','Cable','Server','UPS','Telephone','Television','Projector'];
+// LIVE — src/lib/mongodb.ts (11 categories; Keyboard/Telephone/Television/Projector are NOT in the DB)
+const VALID_CATEGORIES = ['Server','Monitor','Laptop','Desktop','Video Card','Router','Network Switch','Cable','Webcam','UPS','Access Point'];
 ```
 
 > ⚠️ **Verification note:** The `wilkyart` DB has 26 categories from Amazon Reviews 2023. **Confirmed present** in prior electronics clients (ADARA STAR, New Kepa): Desktop, Laptop, Monitor, Video Card, Keyboard, Server, Network Switch, Router, Access Point, Cable, Webcam, UPS, Television. Run `db.collection('products').distinct('wilkyart_category')` first to verify actual categories and adjust `VALID_CATEGORIES` accordingly. Do **not** invent products.
 
 ### CATEGORY_GROUPS (shop page sidebar)
 ```typescript
+// LIVE — src/app/shop/page.tsx
 const CATEGORY_GROUPS = {
-  'Computing': ['Desktop','Laptop','Monitor','Video Card','Keyboard'],
+  'Computing': ['Laptop','Desktop','Monitor','Video Card'],
   'Networking': ['Router','Network Switch','Access Point','Cable'],
-  'Servers & Power': ['Server','UPS'],
-  'Peripherals': ['Webcam','Telephone'],
-  'Display & Presentation': ['Television','Projector'],
+  'Infrastructure': ['Server','UPS','Webcam'],
 };
 ```
 
@@ -380,18 +380,18 @@ images: { unoptimized: true }
 
 ### TOP_CATEGORIES (shop page tab strip) — minimal-line
 ```typescript
-const TOP_CATEGORIES = ['Laptop','Monitor','Desktop','Video Card','Router','Server','Network Switch','Keyboard','UPS','Access Point','Webcam','Cable'];
+// LIVE — src/app/shop/page.tsx
+const TOP_CATEGORIES = ['Laptop','Monitor','Desktop','Video Card','Server','Router','Network Switch','Access Point','UPS','Webcam','Cable'];
 ```
 
 ### CATEGORY_CHIPS (Hero section) — minimal-line
 ```typescript
-const CATEGORY_CHIPS = [
-  { icon: Laptop, name: "Laptops" }, { icon: Monitor, name: "Monitors" },
-  { icon: HardDrive, name: "Desktops" }, { icon: Cpu, name: "Video Cards" },
-  { icon: Router, name: "Routers" }, { icon: Network, name: "Switches" },
-  { icon: Server, name: "Servers" }, { icon: Keyboard, name: "Keyboards" },
-  { icon: Webcam, name: "Webcams" }, { icon: Wifi, name: "Access Points" },
-  { icon: Cable, name: "Cables" }, { icon: Tv, name: "Televisions" },
+// LIVE — src/components/PremiumHero.tsx (CATS). `name` is the label, `cat` is the URL value — they differ!
+const CATS = [
+  { icon: Laptop, name: 'Laptops', cat: 'Laptop' }, { icon: Monitor, name: 'Monitors', cat: 'Monitor' }, { icon: Cpu, name: 'Video Cards', cat: 'Video Card' },
+  { icon: HardDrive, name: 'Desktops', cat: 'Desktop' }, { icon: Router, name: 'Routers', cat: 'Router' }, { icon: Network, name: 'Switches', cat: 'Network Switch' },
+  { icon: Server, name: 'Servers', cat: 'Server' }, { icon: Zap, name: 'UPS', cat: 'UPS' }, { icon: Webcam, name: 'Webcams', cat: 'Webcam' },
+  { icon: Wifi, name: 'Access Points', cat: 'Access Point' }, { icon: Cable, name: 'Cables', cat: 'Cable' },
 ];
 ```
 
@@ -587,3 +587,30 @@ Recommended sequence, following the Oslo Trade / NEMEX KIJI pipeline pattern:
 6. **Multi-currency selector** prominently in header — "VND ₫ · EUR € · USD $" switch reinforces international positioning
 7. **Heritage rule dividers** — thin `border-t border-[#003933]/20` between sections instead of bold color blocks
 8. **Email pill** in header — understated `<Mail />` + small text, cream-outline style, reinforces reachability without shouting
+---
+
+## Category Routing Contract (added 2026-08-21)
+
+Every category link anywhere on the site MUST use the exact singular `VALID_CATEGORIES` value in `?category=`:
+`/shop?category=Laptop`, `/shop?category=Network%20Switch`, `/shop?category=Video%20Card` …
+
+- Plural or display labels (`Laptops`, `Switches`, `Computers`) are **not** API values. The API silently ignores unknown values and returns everything.
+- `src/app/shop/page.tsx` → `normalizeCat()` tolerates common plurals/aliases and falls back to `Laptop`, and a `useEffect` on `sp.get('category')` re-syncs when the URL changes while already on `/shop`. Don't remove either — header/footer links rely on it.
+- Home "Product Range" tiles (`INDEX` in PremiumHero) link to their group's lead category: Computing→Laptop, Networking→Router, Servers & Power→Server, Display & Peripherals→Monitor.
+- When adding a category link: add it to `VALID_CATEGORIES` (mongodb.ts), `TOP_CATEGORIES` + `CATEGORY_GROUPS` + `CATEGORY_DESCRIPTIONS` (shop page), and verify with `db.products.distinct('wilkyart_category')` that products exist.
+
+---
+
+## Session Handoff Log
+
+### 2026-08-21 — Category links landed on wrong section (client report)
+- **Report:** "choose category → pick Computers → takes you to another section."
+- **Root causes:** (1) home Product Range tiles linked to bare `/shop` (defaults to Laptop); (2) hero marquee chips passed plural labels the API ignored; Keyboards/Displays chips pointed at non-existent categories; (3) shop page read `?category=` only on mount, so header links clicked while on `/shop` did nothing.
+- **Fix:** commit `58bc80f` (pushed to `main`). Verified in Chrome against live DB: tiles, in-place header switching, legacy plural URLs, all 11 chips.
+- **Docs:** corrected stale constants in this file to match code; removed the plaintext Mongo URI from this tracked file.
+- **⚠️ Open item for owner:** the Mongo password was committed in this file in `a207b29` and is still in GitHub history — rotate the `manishyadv_db_user` password in Atlas and update `MONGODB_URI` on Vercel + `.env.local`.
+- **Open decision:** "Computing" tile lands on Laptops; change `cat` on `INDEX[0]` in PremiumHero.tsx if Desktops is preferred.
+- **Not done / out of scope:** no product-detail page exists yet (`/api/products/[id]` route is present; no `app/shop/[id]/page.tsx`).
+
+### 2026-04-20 → 04-22 — Initial build
+- `a207b29` initial site, `f306189` mobile hero overflow fix (`min-w-0`), `df66566` logo update.
